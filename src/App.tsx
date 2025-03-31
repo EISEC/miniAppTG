@@ -35,20 +35,29 @@ function App() {
         console.warn('Данные пользователя недоступны');
       }
     } else {
-      console.error('Telegram WebApp не инициализирован');
+      // Используем фиктивные данные для локальной разработки
+      console.warn('Telegram WebApp не инициализирован. Используются фиктивные данные.');
+      const mockUser = {
+        id: 123456789,
+        first_name: 'Иван',
+        last_name: 'Иванов',
+        username: 'ivan_ivanov',
+      };
+      setUser(mockUser);
     }
   }, []);
 
   useEffect(() => {
     const sendUserDataToBackend = async (userData: any) => {
       try {
+        console.log('Отправка данных пользователя:', userData);
         const response = await fetch('https://api-staging.rct24.ru/telegram/auth/', {
           method: 'POST',
           headers: {
             'AuthKey': 'MAHhsdf651LLna',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(userData.id),
+          body: JSON.stringify({ id: userData.id }), // Отправляем ID пользователя
         });
 
         if (!response.ok) {
@@ -58,7 +67,7 @@ function App() {
         const result = await response.json();
         console.log('Ответ от сервера:', result);
       } catch (error) {
-        console.error('Ошибка:', error);
+        console.error('Ошибка при отправке данных:', error);
       }
     };
 
