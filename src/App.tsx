@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import AiChat from './widgets/Aichat';
 export {};
 
 declare global {
@@ -7,57 +8,49 @@ declare global {
     Telegram?: {
       WebApp?: {
         initDataUnsafe?: {
-          user?: {
-            id: number;
-            first_name: string;
-            last_name: string;
-            username: string;
-          };
+          user?: any;
         };
+        ready?: () => void;
       };
     };
   }
 }
-
+const tg = window.Telegram?.WebApp;
 function App() {
   const [user, setUser] = useState<any>(null);
+  const [result, setResult] = useState<any>(null);
+  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiZWQzZmViNmNkYzNmOTg0ZDQ3MjUzMTNiMGNjMGE2MWZiNDM3ZTczYjU5NGViNmJjYmZmMmMxOGUyMzJjZDhkZGRhNmY2ZWRkNzBjMzAxNjAiLCJpYXQiOjE3NDI4OTg1ODguNDY4MTU2LCJuYmYiOjE3NDI4OTg1ODguNDY4MTU3LCJleHAiOjE3NDU0OTA1ODguNDYxMzExLCJzdWIiOiIxMDQ5MSIsInNjb3BlcyI6W119.RFAws4y26lsrS5249wWiQuvCLNi9kAMv_qI-j1TodmAWeQXQR61eG6Sh3sQ0msfpVYjfmcjMbjWMYtD4Hr4SKiPBgRaBvXXXkFQWJ5E9L7YwAwpeZ2bW7Nv8AWKQozSA6iqr7jo0B1hcL3Ehrk1_e7JXixcg1VpCxPkJYKBVBk1MRe9XmlsMhJyLwg2YQE4gXrh17DHcaFwCCNkyyUjvY6ScC2VfLFwLzdlOWSjKrA-3s0Q3kpl6lfQ_J3A6WgZppMx3sxN2zqTl3rQo4QM6U5UhA14D64nkLjWnU5LoqROFw_Q4T5vLcsyo0VBipGDN31nmnlyPfCCU2hpRKQipwZw-2DXUJvG_OrKjug8GzzJLrYqTMM5QAUtluBuVpNj0DODg2CujGTtb2RUQLh6ADYQNMu4v2vpaFeoqOVaNfA2p_1ywfL2UdZgzlrYsd2KTghmQxo6ZFV4JJh4J9yvaQOueko-2rap4oEi2tDn9oa2DIRCqGM1OImJZFjiwWqu1t-FwTwLGCPNcSI4Vvs7wxyKhWO5dOdOnQJrdyfFWKWo6uHQRZhIStHY6XhXZlFNBhUPfMq8kpZbQVSLUFtYwDr3QHcllPNrot1vmazmgwYyJNArWZ5T86duY7ZPljHvYAU4QGtTu5xgpZwPRYqvZWZjuiFosqDod6nBnFMEud_I'
+  const uuid = 'c39887e7-eaaa-48a1-9143-ed44d4d85a8e'
+
+  useEffect(() => {
+    if (typeof tg?.ready === 'function') {
+      tg.ready();
+    }
+  }, [])
 
   useEffect(() => {
     // Проверяем, доступен ли объект Telegram WebApp
-    const tg = window.Telegram?.WebApp;
     if (tg) {
       // Получаем данные пользователя
       const userData = tg.initDataUnsafe?.user;
       if (userData) {
         setUser(userData);
-        console.log('Данные пользователя:', userData);
       } else {
         console.warn('Данные пользователя недоступны');
       }
-    } else {
-      // Используем фиктивные данные для локальной разработки
-      console.warn('Telegram WebApp не инициализирован. Используются фиктивные данные.');
-      const mockUser = {
-        id: 123456789,
-        first_name: 'Иван',
-        last_name: 'Иванов',
-        username: 'ivan_ivanov',
-      };
-      setUser(mockUser);
-    }
+    } 
   }, []);
 
   useEffect(() => {
     const sendUserDataToBackend = async (userData: any) => {
       try {
-        console.log('Отправка данных пользователя:', userData);
-        const response = await fetch('https://api-staging.rct24.ru/telegram/auth/', {
-          method: 'POST',
+        const response = await fetch(`https://api-staging.rct24.ru/telegram/auth/${userData.id}`, {
+          method: 'GET',
           headers: {
             'AuthKey': 'MAHhsdf651LLna',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ id: userData.id }), // Отправляем ID пользователя
+          // body: JSON.stringify({ id: userData.id }), // Отправляем ID пользователя
         });
 
         if (!response.ok) {
@@ -65,9 +58,10 @@ function App() {
         }
 
         const result = await response.json();
-        console.log('Ответ от сервера:', result);
+        setResult(result); // Сохраняем ответ сервера в состоянии
       } catch (error) {
         console.error('Ошибка при отправке данных:', error);
+        setResult({ error: 'Ошибка при отправке данных' });
       }
     };
 
@@ -79,7 +73,13 @@ function App() {
   return (
     <>
       <div>
-        <h1>Авторизация через Telegram</h1>
+        <AiChat uuid={uuid} token={token}/>
+        {result && (
+          <div>
+            <h2>Ответ от сервера:</h2>
+            <pre>{JSON.stringify(result, null, 2)}</pre>
+          </div>
+        )}
         {user ? (
           <div>
             <p>Добро пожаловать, {user.first_name} {user.last_name}!</p>

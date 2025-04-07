@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@telegram-apps/sdk": "^3.6.0",
+    "ngrok": "^5.0.0-beta.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

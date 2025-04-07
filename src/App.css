@@ -40,3 +40,173 @@
 .read-the-docs {
   color: #888;
 }
+
+.justwidget {
+  --main-background-color: #FFFFFF !important;
+  --header-background-color: #FFFFFF !important;
+  width: 100% !important;
+  max-width: 500px !important;
+  border-radius: 0px !important;
+  --font: 'Nunito_Sans', sans-serif!important;
+}
+
+.justwidget--inner {
+  border-radius: 0px !important;
+}
+
+.justwidget .justwidget--headline-without-text {
+  justify-content: space-between !important;
+}
+
+.justwidget--message--date {
+  margin-top: 0 !important;
+}
+
+.justwidget--message_content {
+  display: flex !important;
+  gap: 10px !important;
+  padding: 10px 16px 10px 16px !important;
+  align-items: stretch;
+  justify-content: space-between !important;
+  border-radius: inherit !important;
+  flex-direction: column;
+  width: auto !important;
+  min-width: 100px !important;
+  max-width: calc(410px - var(--avatar-width)) !important;
+}
+
+.justwidget--message_asst {
+  border-radius: 20px 20px 20px 4px !important;
+}
+
+.justwidget--message_user {
+  border-radius: 20px 20px 4px 20px !important;
+}
+
+.justwidget--message_user > .justwidget--message_content {
+  background: #FAFAFA !important;
+  border: 1px solid #e6e6e6;
+}
+
+.justwidget--message_asst > .justwidget--message_content {
+  background: #FFFFFF !important;
+  border: 1px solid #e6e6e6;
+}
+
+.justwidget .justwidget--inner .justwidget--container-form {
+  border: none !important;
+}
+
+.justwidget--buttons-top {
+  border-top: 1px solid #666666 !important;
+  padding: 24px 24px 6px 24px !important;
+}
+
+.justwidget--toggle-action {
+  border: 1px solid black !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+}
+
+.justwidget--toggle-action:hover {
+  border: 1px solid #F54012 !important;
+}
+
+.justwidget--powered_label {
+  display: none !important;
+}
+
+.justwidget--button {
+  padding: 6px 12px 6px 12px !important;
+  border: 1px solid #151515 !important;
+  background: #FFFFFF !important;
+  border-radius: 10px !important;
+}
+
+.justwidget--button:hover {
+  background: #dce0e0 !important;
+}
+
+.justwidget--container-form {
+  padding: 0px 24px 24px 24px !important;
+}
+
+.justwidget--container-form textarea {
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #e6e6e6;
+}
+
+.justwidget--message * {
+  scrollbar-color: transparent rgba(199, 204, 218, 0.2) !important;
+  scrollbar-width: thin !important;
+  white-space: normal!important;
+}
+
+.justwidget--close .justwidget--toggle-action svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.justwidget--close {
+  border: none!important;
+}
+.justwidget--close:hover {
+  border: none!important;
+}
+
+.juswidget--image-thumbnail {
+  border-radius: 16px 16px 0px 0px!important;
+}
+
+.justwidget--asst-pic {
+  background-image: url('assets/just_ai_icon.svg') !important;
+  background-size: 30px !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.justwidget--toggle-action:hover > .justwidget--asst-pic {
+  background-image: url('assets/just_ai_hover.svg') !important;
+}
+
+.justwidget--headline-without-text:before {
+  content: 'Redcat bot';
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+  padding-left: 52px;
+  background-image: url('assets/avtar_ai.svg') !important;
+  height: 44px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.justwidget--headline-without-text {
+  height: 65px!important;
+  border-bottom: 1px solid #e6e6e6!important;
+}
+
+.justwidget--message_spinner {
+  border: none!important;
+  background: transparent!important;
+  width: 100%!important;
+}
+
+.justwidget--message_image > .justwidget--message_content {
+  padding: 10px !important;
+}
+
+.justwidget--message_image > .justwidget--message_content img {
+  border-radius: 12px!important;
+}
+
+.justwidget--asst-pic svg {
+  display: none;
+}
+
+/* .justwidget--message_content .housing-card {
+
+} */
